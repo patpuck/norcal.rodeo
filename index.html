@@ -54,11 +54,6 @@
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
-
-        let dim = window.innerWidth;
-        if (window.innerHeight < dim) {
-            dim = window.innerHeight;
-        };  
         const duck = document.getElementById('duck');
         // const duckbox = duck.getBoundingClientRect();
         const glow = document.getElementById('glow');
@@ -89,6 +84,11 @@
         function animate() {
             const cx = window.innerWidth / 2;
             const cy = window.innerHeight / 2;
+
+            let dim = window.innerWidth;
+            if (window.innerHeight < dim) {
+                dim = window.innerHeight;
+            };  
 
             if ( mouseX > window.innerWidth/2){
                 duckrotdes = right
@@ -136,7 +136,9 @@
             // glow.style.
             
             glowColor = [255, 255, 255]
-            glow.style.boxShadow = `inset 0 0 ${200}px ${(Math.sin(t)*0.5+0.5)*dim/10}px rgba(${rand(200,255)}, ${rand(100,200)}, ${rand(150,255)}, ${Math.random()*0.01+(Math.sin(t*2)+2)*0.03})`;
+            glow.style.boxShadow = `
+                inset 0 0 ${dim/100}px ${dim/16}px rgba(0, 0, 0, 255),
+                inset 0 0 ${dim/2}px ${(Math.sin(t)*0.1+0.9)*dim/3}px rgba(${rand(200,210)}, ${rand(200,210)}, ${rand(240,255)}, ${Math.random()*0.01+(0.1*Math.sin(t*2)+2)*0.03})`;
 
             t += dt;
             requestAnimationFrame(animate);
