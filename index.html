@@ -27,7 +27,7 @@
             pointer-events: none;
         }
 
-        #duck {
+        .duh {
             position: absolute;
             font-family: 'Courier New', monospace;
             color: white;
@@ -36,16 +36,39 @@
             line-height: 1.2;
             /*top: 50%;*/
             /*left: 50%;*/
-            transform: translate(-50%, -50%);
+            /*transform: translate(-50%, -50%);*/
         }
     </style>
 </head>
 <body>
     <div id="glow"></div>
-    <pre id="duck">>(o)__
- (_~_/</pre>
+<!--     <pre id="duck">>(o)__
+ (_~_/</pre> -->
+    <!-- <pre id="t1">bluemap gar humper (gargar)</pre> -->
 
     <script>
+        let duck = document.createElement('pre');
+        duck.className = 'duh';
+        document.body.appendChild(duck);
+
+        let t1 = document.createElement('a');
+        t1.className = 'duh';
+        t1.href = "https://norcal.rodeo";
+        t1.textContent = 'norcal.rodeo';
+        document.body.appendChild(t1);
+        let t1hov = 0;
+        t1.onmouseenter = () => t1hov = 1;
+        t1.onmouseleave = () => t1hov = 0;
+
+        let t2 = document.createElement('a');
+        t2.className = 'duh';
+        t2.href = "http://mc.norcal.rodeo:8070/";
+        t2.textContent = 'bluemap';
+        document.body.appendChild(t2);
+        let t2hov = 0;
+        t2.onmouseenter = () => t2hov = 1;
+        t2.onmouseleave = () => t2hov = 0;
+
         let mouseX = 0;
         let mouseY = 0;
 
@@ -62,7 +85,7 @@
             return window.innerHeight
         }
 
-        const duck = document.getElementById('duck');
+        // const duck = document.getElementById('duck');
         // const duckbox = duck.getBoundingClientRect();
         const glow = document.getElementById('glow');
         let t = 0;
@@ -91,6 +114,7 @@
         let lastblink = 0
         let holdblink = 0.2
         let spinscore = 0
+        let torpor = 0
         mouseX = w()/4
         mouseY = h()/2
 
@@ -108,8 +132,8 @@
 
             // duck :
 
-            const cx = window.innerWidth / 2;
-            const cy = window.innerHeight / 2;
+            let cx = window.innerWidth / 2;
+            let cy = window.innerHeight / 2;
             if (starting) {dx = cx; vx = cx;dy = cy; vy = cy; starting = false}
             // const cx = 0;
             // const cy = 0;
@@ -131,8 +155,8 @@
             let touchy = Math.max(0, (1-Math.abs(hort)) * (1-Math.abs(vert)) - 0.6)*dim/10
 
             const rad = 0.03
-            let desx = cx + Math.sin(t*1.00) * dim * rad;
-            let desy = cy + Math.sin(t*0.75) * dim * rad;
+            let desx = cx + Math.sin(t*1.00) * dim * rad
+            let desy = cy + Math.sin(t*0.75) * dim * rad - dim/10
             desx += touchy * (hort**1)*25
             desy += touchy * (vert**1)*10
             dx = desx
@@ -154,19 +178,23 @@
                 nextblink = 2*rand(0,1)**2 + holdblink
             }
 
-            spinscore = Math.max(0, Math.min(spinscore-0.01, 5))  
-            if (Math.abs(duckvel) > Math.PI*8) {
+            spinscore = Math.max(0, Math.min(spinscore-0.01, 8))  
+            if (Math.abs(duckvel) > Math.PI*7) {
                 spinscore += 0.05
             }
 
-            if (spinscore > 3) {
+            if (spinscore > 6) {
                 duck.textContent = "-(x)__\n (_~_/";
-            } else if (spinscore > 2) {
+                if (torpor < 1) { duckvel = 2*duckvel } // make him spin out
+                torpor = 1
+            } else if (spinscore > 3) {
                 duck.textContent = "-(o)__\n (_~_/";
+                if (torpor == 1) { torpor = 0.995 } // how fast the duck gonna spin just after waking back up
             } else if (((t > lastblink + nextblink) & (t < (lastblink + nextblink + holdblink)))) {
                 duck.textContent = ">(-)__\n (_~_/";
             } else {
                 duck.textContent = ">(o)__\n (_~_/";
+                torpor = 0
             }
             // console.log((t > lastblink) && (t < (t + nextblink)))
 
@@ -179,32 +207,52 @@
 
             let h2 = Math.abs(hort)
             acc = 500*Math.abs(hort)
+            let torp = 1-torpor
 
             duckacc = acc * dir
             // duckacc = Math.sin(mag)
-            duckvel += duckacc * dt
-            duckvel = duckvel * ((1-duckdampen)+duckdampen*mag/Math.PI)
+            duckvel += duckacc * dt * (1-torpor)
+            if (torpor < 1) {
+                duckvel = duckvel * ((1-duckdampen)+duckdampen*mag/Math.PI)
+            } else {
+                duckvel = 0.985 * duckvel
+            }
             duckrot += duckvel * dt
 
             // duck.textContent = `>(o)__\n (_~_/`
+
+            function shad(o = 1, vig = h2) { 
+                return  `
+                    0px 0px ${100-rand(80,100)*(vig)}px rgba(${0}, ${255}, ${0}, ${o}),
+                    0px 0px ${80 -rand(70,80) *(vig)}px rgba(${255}, ${255}, ${255}, ${o}),
+                    0px 0px ${60 -rand(50,60) *(vig)}px rgba(${255}, ${255}, ${0}, ${o}),
+                    0px 0px ${50 -rand(40,50) *(vig)}px rgba(${255}, ${255}, ${255}, ${o}),
+                    0px 0px ${40 -rand(30,40) *(vig)}px rgba(${0}, ${255}, ${255}, ${o}),
+                    ${40*rand()*vig}px ${5*rand()}px 3px rgba(${255}, ${0}, ${0}, ${o}),
+                    ${20*rand()*vig}px ${5*rand()}px 3px rgba(${0}, ${255}, ${255}, ${o})`
+            }
             
             duck.style.fontSize = 24+Math.random()*1 + 'px';
             duck.style.color = `rgba(${255}, ${220+35*Math.random()}, ${200}, 255)`;
             // duck.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%) scaleX(${Math.cos(duckrot)})`;
-            duck.style.transform = `translate(${vx}px, ${vy}px) translate(-50%, -100%) scale(${Math.cos(duckrot)}, ${1-0.2*Math.abs(vert)}) skewY(${Math.sin(duckrot)*vert*0.5}rad)`;
-            duck.style.textShadow = `
-                    0px 0px ${100-rand(80,100)*(h2)}px green,
-                    0px 0px ${80 -rand(70,80) *(h2)}px white,
-                    0px 0px ${60 -rand(50,60) *(h2)}px yellow,
-                    0px 0px ${50 -rand(40,50) *(h2)}px white,
-                    0px 0px ${40 -rand(30,40) *(h2)}px cyan,
-                    ${40*rand()*hort}px ${5*rand()}px 3px red,
-                    ${20*rand()*hort}px ${5*rand()}px 3px cyan
-                    `
+            duck.style.transform = `translate(${vx}px, ${vy - 0.01*dim/t}px) translate(-50%, -100%) scale(${Math.cos(duckrot)}, ${1-0.2*Math.abs(vert)}) skewY(${Math.sin(duckrot)*vert*0.5}rad)`;
+            duck.style.textShadow = shad()
 
             // text :
 
+            let dist = dim/10
+            let stiff = 0.5
+            t1.style.transform = `translate(${((1+stiff)*cx+(1-stiff)*vx)/2 - dim/100*Math.sin(t)}px, ${cy - dim/100*Math.sin(0.8*t) + 0.5*dist + 0.01*dim/t}px) translate(-50%, -100%)`
+            t1.style.textShadow = shad(0.5, h2 - t1hov*0.5)
+            t1.style.textDecoration = `none`
+            t1.style.color = `rgba(${rand(255, 255*(1-t1hov))}, 255, ${rand(255, 255*(1-t1hov))}, ${0.5 + 0.5*t1hov})`
+            t1r = t1.getBoundingClientRect()
 
+            stiff = (stiff+1)/2
+            t2.style.transform = `translate(${((1+stiff)*cx+(1-stiff)*vx)/2 - dim/100*Math.sin(-0.8*t)}px, ${cy - dim/100*Math.sin(-0.5*t) + dist + 0.01*dim/t}px) translate(-50%, -100%)`
+            t2.style.textShadow = shad(0.5, h2 - t2hov*0.5)
+            t2.style.textDecoration = `none`
+            t2.style.color = `rgba(${rand(255, 255*(1-t2hov))}, ${rand(255, 255*(1-t2hov))}, 255, ${0.5 + 0.5*t2hov})`
 
             // glow :
             
