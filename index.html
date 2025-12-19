@@ -76,12 +76,17 @@
         t2.onmouseenter = () => t2hov = 1;
         t2.onmouseleave = () => t2hov = 0;
 
-        // Create a container for the text inside the right panel
+        let cam = document.createElement('img');
+        cam.src = "rightwardshift.png"; 
+        cam.className = 'duh';          
+        cam.style.width = '200px';     
+        cam.style.objectFit = 'fill';
+        // photo.style.filter = 'brightness(1)'; 
+        document.body.appendChild(cam);
+
         let rdc = document.createElement('div'); // rdc = rightward description content :>
-        rdc.style.padding = '40px'; // Your "margin/padding"
-        // rdc.style.color = 'rgba(255, 255, 255, 0)';
+        rdc.style.padding = '40px'; 
         rdc.style.fontFamily = "'Courier New', monospace";
-        // rdc.style.whiteSpace = 'pre-wrap'; 
         rdc.innerHTML = "<h2>skbdi</h2><p><i>θ</i>: garp</p><p><i>ω</i>: terp</p><p><i>α</i>: perp</p>";
 
         // Append it to the rightdesc div instead of the body
@@ -90,7 +95,6 @@
         let mouseX = 0;
         let mouseY = 0;
 
-        // Update position whenever mouse moves
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
@@ -136,6 +140,7 @@
         let budgingright = 0
         let leftbudge = 0
         let rightbudge = 0
+        let forcebudgeright = false
         mouseX = w()/4
         mouseY = h()/2
 
@@ -194,12 +199,14 @@
                 duckrotdes = right
             };
 
+            camr = cam.getBoundingClientRect()
             let wrightdiv = w()/3
-            if (mouseX > w()-dim/10) {
-                budgingright = budgingright*0.9 + 0.1
+            if ( (mouseX > camr.left) & (mouseX < (camr.left + camr.width)) & (mouseY > camr.top) & (mouseY < (camr.top + camr.height)) ) {
+                forcebudgeright = true
             } else if (mouseX < w()-wrightdiv) {
-                budgingright = budgingright*0.9
+                forcebudgeright = false
             }
+            if (forcebudgeright) { budgingright = budgingright*0.9 + 0.1; } else { budgingright = budgingright*0.9; }
 
             if (t > (lastblink + nextblink + holdblink)) {
                 lastblink = t
@@ -295,24 +302,51 @@
             glow.style.boxShadow = `
                 inset 0 0 ${rand(1,2)*dim/100}px ${marg}px rgba(0, 0, 0, 255),
                 inset 0 0 ${dim/2}px ${(Math.sin(t)*0.1+0.9)*dim/3}px rgba(${rand(200,210)}, ${rand(200,210)}, ${rand(240,255)}, ${Math.random()*0.01+(0.1*Math.sin(t*2)+2)*0.03})`;
+            glow.innerHTML = `<div style="width: ${w()}px;
+                    height: ${h()}px;
+                    background: url('noise.gif');
+                    background-size: 200% 100%; 
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity: 0.01;
+                "></div>`
+
+
+            // right flipper for the thing :
+            cam.style.transform = `translate(${w()-marg*2 + dim/10*budgingright + 10/t}px, ${h()/2}px) translate(-50%, -50%) scale(${dim/30}%)`
+            cam.style.filter = `
+                drop-shadow(0px 0px 20px rgba(0, 255, 255, 0.8)) 
+                drop-shadow(5px 5px 5px rgba(255, 0, 0, 0.5))
+                brightness(${1-2*budgingright})
+            `;
+
+            // right thing :
+
             // glow.style.transform = `scaleX(${(w()-leftbudge-rightbudge)/w()}) translate(${(leftbudge-rightbudge)/2}px, 0px)`
             rightdesc.style.boxShadow = `0 0 ${rand(1,2)*dim/100}px ${0}px rgba(0, 0, 0, 255)`
             rightdesc.style.background = `rgba(0, 0, 0, 255)`
             rightdesc.style.transform = `translate(-${rightbudge+marg}px, 0px)`
             rdc.style.color = `rgba(255, 255, 255, ${o2} )`
             rdc.innerHTML = `
-                <h2>norcal.rodeo is my minecraft server</h2>
-                <p>its <u>geyser enabled</u>, meaning ur bedrock friends can play too :></p>
+                <h2>norcal.rodeo is my minecraft server</h2><br>
+                <div style="
+                    width: ${rightbudge}px;
+                    height: ${rightbudge*0.1}px;
+                    background: linear-gradient(rgba(0,0,0,${1-budgingright}), rgba(0,0,0,${0.5-budgingright})), url('motd.png');
+                    background-size: cover;
+                    background-position: center;
+                "></div><br>
+                <p>it's mostly for irls but invite anyone u want</p>
                 plugins make it so that:<ul>
+                    <li>ur bedrock friends can play too :></li>
                     <li>chests loot is instanced per-player</li>
                     <li>sleeping warps time instead of skipping</li>
                     <li>you can make maps from images</li>
-                    <li>player heads drop</li>
+                    <li>murdered player heads drop</li>
                     <li>death items are stored in a grave</li>
                     <li>terralith etc; the world is prettier</li>
                     <li>w compatibility for som client mods<ul>
-                        <li>appleskin</li>
-                        <li>axiom</li>
+                        <li>appleskin, axiom, voicechat uhh</li>
                         <li>jade, sodium, etcblablabla</li>
                     </ul></li>
                     <li>more but i forgot</li>
