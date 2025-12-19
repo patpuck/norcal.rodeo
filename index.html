@@ -34,6 +34,20 @@
             width: 25%;
             height: 100%;
             flex-direction: column;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            pointer-events: auto;
+            /*scrollbar-width: thin;*/
+            /*scrollbar-color: rgba(255, 0, 0, 255);*/
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* 2. Hide for Firefox */
+            scrollbar-width: none;
+
+            /* 3. Hide for IE and old Edge */
+            -ms-overflow-style: none;
         }
 
         .duh {
@@ -294,7 +308,7 @@
 
             leftbudge = 0
             rightbudge = w()/3*budgingright
-            rightdesc.style.width = rightbudge + 'px';
+            rightdesc.style.width = rightbudge + 10 + 'px';
             
             let marg = dim/16
             o2 = budgingright*2-1
@@ -350,7 +364,7 @@
                         <li>jade, sodium, etcblablabla</li>
                     </ul></li>
                     <li>more but i forgot</li>
-                </ul>` 
+                </ul><br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l` 
             rdc.style.textShadow = `
                 ${8*rand()}px ${5*rand()}px 3px rgba(${0}, ${0.5*(Math.sin(t)+0.5)*128}, ${(1-0.5*(Math.sin(t)+0.5))*255}, ${o2}),
                 0px 0px ${rand(10,20)}px rgba(${255}, ${255}, ${255}, ${o2})`;
