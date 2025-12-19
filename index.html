@@ -11,7 +11,8 @@
             width: 100%;
             height: 100vh;
             background: black;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: scroll;
             /*position: relative;*/
             position: fixed;
             boxShadow: inset 0 0 200px 100px rgba(255, 255, 255, 0.3);
@@ -48,6 +49,10 @@
 
             /* 3. Hide for IE and old Edge */
             -ms-overflow-style: none;
+        }
+        #rightdesc a {
+            color: inherit;
+            text-decoration: none;
         }
 
         .duh {
@@ -99,9 +104,36 @@
         document.body.appendChild(cam);
 
         let rdc = document.createElement('div'); // rdc = rightward description content :>
-        rdc.style.padding = '40px'; 
+        rdcpad = 40
+        rdc.style.padding = `${rdcpad}px`; 
         rdc.style.fontFamily = "'Courier New', monospace";
-        rdc.innerHTML = "<h2>skbdi</h2><p><i>θ</i>: garp</p><p><i>ω</i>: terp</p><p><i>α</i>: perp</p>";
+        rdc.style.pointerEvents = 'auto';
+        rdc.innerHTML = `
+            <h2 id="rdc-title">norcal.rodeo is my minecraft server</h2><br>
+            <div id="rdc-motd" style="
+                width: 1000px;
+                height: 30px;
+                background: linear-gradient(rgba(0,0,0,1), rgba(0,0,0,0.5)), url('motd.png');
+                background-size: cover;
+                background-position: center;
+            "></div><br>
+            <p>it's mostly for irls via the <a href='https://discord.com/channels/1025596024112291861/1103899084739317801'><u>sonoma county furries' gaming channel</u></a> but invite anyone u want</p>
+            plugins make it so that:<ul>
+                <li>ur bedrock friends can play too :></li>
+                <li>thers /tpa /home etc</li>
+                <li>chests loot is instanced per-player</li>
+                <li>sleeping warps time instead of skipping</li>
+                <li>you can make maps from images</li>
+                <li>murdered player heads drop</li>
+                <li>death items are stored in a grave</li>
+                <li>terralith etc; the world is prettier</li>
+                <li>w compatibility for som client mods<ul>
+                    <li>appleskin, axiom, voicechat uhh</li>
+                    <li>jade, sodium, etcblablabla</li>
+                </ul></li>
+                <li>more but i forgot</li>
+            </ul>`;
+        const rdcMotd = rdc.querySelector('#rdc-motd');
 
         // Append it to the rightdesc div instead of the body
         document.getElementById('rightdesc').appendChild(rdc);
@@ -155,6 +187,7 @@
         let leftbudge = 0
         let rightbudge = 0
         let forcebudgeright = false
+        let teensy = 0 // r we in a phone
         mouseX = w()/4
         mouseY = h()/2
 
@@ -184,6 +217,8 @@
                 dim = window.innerHeight;
             };  
 
+            if (dim <= 800) { teensy = 1; forcebudgeright = false } else { teensy = 0 } // teensaaaaaaay
+
             duckrot = duckrot % (2 * Math.PI);
             // let dx = cx + Math.sin(t) * dim * 0.1;
             // let dy = cy + Math.sin(t*0.75) * dim * 0.1;
@@ -207,15 +242,11 @@
             vx = Math.max(dim/4, Math.min(vx, window.innerWidth -dim/4))
             vy = Math.max(dim/4, Math.min(vy, window.innerHeight-dim/4))
 
-            if ( hort > 0 ){
-                duckrotdes = left
-            } else {
-                duckrotdes = right
-            };
+            if ( hort > 0 ){ duckrotdes = left } else { duckrotdes = right };
 
             camr = cam.getBoundingClientRect()
             let wrightdiv = w()/3
-            if ( (mouseX > camr.left) & (mouseX < (camr.left + camr.width)) & (mouseY > camr.top) & (mouseY < (camr.top + camr.height)) ) {
+            if ( !teensy & (mouseX > camr.left) & (mouseX < (camr.left + camr.width)) & (mouseY > camr.top) & (mouseY < (camr.top + camr.height)) ) {
                 forcebudgeright = true
             } else if (mouseX < w()-wrightdiv) {
                 forcebudgeright = false
@@ -308,10 +339,10 @@
 
             leftbudge = 0
             rightbudge = w()/3*budgingright
-            rightdesc.style.width = rightbudge + 10 + 'px';
-            
             let marg = dim/16
             o2 = budgingright*2-1
+
+            // rightdesc.style.width = rightbudge + 10 + 'px';
 
             glow.style.boxShadow = `
                 inset 0 0 ${rand(1,2)*dim/100}px ${marg}px rgba(0, 0, 0, 255),
@@ -327,47 +358,39 @@
 
 
             // right flipper for the thing :
-            cam.style.transform = `translate(${w()-marg*2 + dim/10*budgingright + 10/t}px, ${h()/2}px) translate(-50%, -50%) scale(${dim/30}%)`
+            cam.style.transform = `translate(${w()-marg*2 + dim/10*budgingright + 10/t}px, ${h()/2}px) translate(-50%, -50%) scale(${dim/30 * (1-teensy)}%)`
             cam.style.filter = `
-                drop-shadow(0px 0px 20px rgba(0, 255, 255, 0.8)) 
-                drop-shadow(5px 5px 5px rgba(255, 0, 0, 0.5))
-                brightness(${1-2*budgingright})
-            `;
+                drop-shadow(${10*rand()}px ${10*rand()}px 20px rgba(0, 255, 255, ${0.5-budgingright})) 
+                drop-shadow(5px 5px 5px rgba(255, 0, 0, ${0.5-budgingright}))
+                brightness(${0.5-4*budgingright})`;
 
             // right thing :
 
-            // glow.style.transform = `scaleX(${(w()-leftbudge-rightbudge)/w()}) translate(${(leftbudge-rightbudge)/2}px, 0px)`
             rightdesc.style.boxShadow = `0 0 ${rand(1,2)*dim/100}px ${0}px rgba(0, 0, 0, 255)`
             rightdesc.style.background = `rgba(0, 0, 0, 255)`
-            rightdesc.style.transform = `translate(-${rightbudge+marg}px, 0px)`
-            rdc.style.color = `rgba(255, 255, 255, ${o2} )`
-            rdc.innerHTML = `
-                <h2>norcal.rodeo is my minecraft server</h2><br>
-                <div style="
-                    width: ${rightbudge}px;
-                    height: ${rightbudge*0.1}px;
-                    background: linear-gradient(rgba(0,0,0,${1-budgingright}), rgba(0,0,0,${0.5-budgingright})), url('motd.png');
-                    background-size: cover;
-                    background-position: center;
-                "></div><br>
-                <p>it's mostly for irls but invite anyone u want</p>
-                plugins make it so that:<ul>
-                    <li>ur bedrock friends can play too :></li>
-                    <li>chests loot is instanced per-player</li>
-                    <li>sleeping warps time instead of skipping</li>
-                    <li>you can make maps from images</li>
-                    <li>murdered player heads drop</li>
-                    <li>death items are stored in a grave</li>
-                    <li>terralith etc; the world is prettier</li>
-                    <li>w compatibility for som client mods<ul>
-                        <li>appleskin, axiom, voicechat uhh</li>
-                        <li>jade, sodium, etcblablabla</li>
-                    </ul></li>
-                    <li>more but i forgot</li>
-                </ul><br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l<br>l` 
-            rdc.style.textShadow = `
-                ${8*rand()}px ${5*rand()}px 3px rgba(${0}, ${0.5*(Math.sin(t)+0.5)*128}, ${(1-0.5*(Math.sin(t)+0.5))*255}, ${o2}),
-                0px 0px ${rand(10,20)}px rgba(${255}, ${255}, ${255}, ${o2})`;
+            if (!teensy) {
+                rightdesc.style.transform = `translate(${-(rightbudge+marg)}px, 0px)`
+                rightdesc.style.width = rightbudge + 10 + 'px';
+                rdc.style.color = `rgba(255, 255, 255, ${o2} )`
+                rdc.style.textShadow = `
+                    ${8*rand()}px ${5*rand()}px 3px rgba(${0}, ${0.5*(Math.sin(t)+0.5)*128}, ${(1-0.5*(Math.sin(t)+0.5))*255}, ${o2}),
+                    0px 0px ${rand(10,20)}px rgba(${255}, ${255}, ${255}, ${o2})`;
+                rdcMotd.style.width = `${rightbudge-rdcpad*1}px`;
+                rdcMotd.style.height = `${rightbudge*0.1}px`;
+                rdcMotd.style.background = `linear-gradient(rgba(0,0,0,${1-budgingright}), rgba(0,0,0,${0.5-budgingright})), url('motd.png')`;
+            } else {
+                rightdesc.style.transform = `translate(${-w()}px, ${h()/2}px)`
+                // rightdesc.style.left = `0 px`;
+                // rightdesc.style.top = h()/2 + `px`;
+                rightdesc.style.width = w() + `px`;
+                rightdesc.style.height = h() + `px`;
+                rdcMotd.style.width = `${w()-rdcpad*2}px`;
+                rdcMotd.style.height = `${(w()-rdcpad*2)*0.1}px`;
+                rdcMotd.style.background = `url('motd.png')`;
+                rdc.style.color = `rgba(255, 255, 255, 255 )`
+            }
+            rdcMotd.style.backgroundSize = 'cover';
+            rdcMotd.style.backgroundPosition = 'center';
 
             t += dt;
             requestAnimationFrame(animate);
