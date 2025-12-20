@@ -9,13 +9,17 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             background: black;
             overflow-x: hidden;
             overflow-y: scroll;
             /*position: relative;*/
-            position: fixed;
+            /*position: fixed;*/
             boxShadow: inset 0 0 200px 100px rgba(255, 255, 255, 0.3);
+        }
+
+        #spacer {
+            position: relative;
         }
 
         #glow {
@@ -33,9 +37,10 @@
             top: 0;
             left: 100%;
             width: 25%;
-            height: 100%;
+            height: 100vh;
+            /*height: 100%;*/
             flex-direction: column;
-            overflow-y: auto; 
+            overflow-y: scroll; 
             overflow-x: hidden;
             pointer-events: auto;
             /*scrollbar-width: thin;*/
@@ -102,6 +107,14 @@
         cam.style.objectFit = 'fill';
         // photo.style.filter = 'brightness(1)'; 
         document.body.appendChild(cam);
+
+        // let spacer = document.createElement('div');
+        // document.body.appendChild(spacer);
+        // spacer.style.position = `relative`;
+        // spacer.style.background = `rgba(255, 0, 0, 255)`;
+        // spacer.style.top = '1000px';
+        // spacer.style.width = `200px`;
+        // spacer.style.height = `200px`;
 
         let rdc = document.createElement('div'); // rdc = rightward description content :>
         rdcpad = 40
@@ -186,7 +199,7 @@
         let budgingright = 0
         let leftbudge = 0
         let rightbudge = 0
-        let forcebudgeright = false
+        let forcebudge = false
         let teensy = 0 // r we in a phone
         mouseX = w()/4
         mouseY = h()/2
@@ -206,52 +219,54 @@
             // duck :
 
             let cx = window.innerWidth / 2;
-            let cy = window.innerHeight / 2;
+            let cy = (window.innerHeight / 2);
             if (starting) {dx = cx; vx = cx;dy = cy; vy = cy; starting = false}
             // const cx = 0;
             // const cy = 0;
-            cx += leftbudge/2 -rightbudge/2
+            cx += teensy ? 0 : leftbudge/2 -rightbudge/2
+            cy += teensy ? leftbudge/2 -rightbudge/2 : 0
 
             let dim = window.innerWidth;
             if (window.innerHeight < dim) {
                 dim = window.innerHeight;
             };  
 
-            if (dim <= 800) { teensy = 1; forcebudgeright = false } else { teensy = 0 } // teensaaaaaaay
+            if (w() <= h()) { teensy = 1 } else { teensy = 0 } // teensaaaaaaay
 
             duckrot = duckrot % (2 * Math.PI);
             // let dx = cx + Math.sin(t) * dim * 0.1;
             // let dy = cy + Math.sin(t*0.75) * dim * 0.1;
 
-            rx = 2*(dx - mouseX)
-            ry = 2*(dy - mouseY)
-            hort = Math.max(-1, Math.min(rx/window.innerWidth, 1)) // clamped cuz it was buggin crazy
-            vert = Math.max(-1, Math.min(ry/window.innerHeight,1))
+            rx = (mouseX - dx)
+            ry = (mouseY - dy)
+            hort = Math.max(-1, Math.min(2*rx/window.innerWidth, 1)) // clamped cuz it was buggin crazy
+            vert = Math.max(-1, Math.min(2*ry/window.innerHeight,1))
+            // console.log(mouseY, dy, ry)
 
             let touchy = Math.max(0, (1-Math.abs(hort)) * (1-Math.abs(vert)) - 0.6)*dim/10
 
             const rad = 0.03
             let desx = cx + Math.sin(t*1.00) * dim * rad
             let desy = cy + Math.sin(t*0.75) * dim * rad - dim/10
-            desx += touchy * (hort**1)*25
-            desy += touchy * (vert**1)*10
+            desx += touchy * (-hort)*25
+            desy += touchy * (-vert)*10
             dx = desx
             dy = desy
             vx = (1-ldamp)*vx + ldamp*desx
             vy = (1-ldamp)*vy + ldamp*desy
-            vx = Math.max(dim/4, Math.min(vx, window.innerWidth -dim/4))
-            vy = Math.max(dim/4, Math.min(vy, window.innerHeight-dim/4))
+            // vx = Math.max(dim/4, Math.min(vx, window.innerWidth -dim/4))
+            // vy = Math.max(dim/4, Math.min(vy, window.innerHeight-dim/4))
 
-            if ( hort > 0 ){ duckrotdes = left } else { duckrotdes = right };
+            if ( hort < 0 ){ duckrotdes = left } else { duckrotdes = right };
 
             camr = cam.getBoundingClientRect()
-            let wrightdiv = w()/3
-            if ( !teensy & (mouseX > camr.left) & (mouseX < (camr.left + camr.width)) & (mouseY > camr.top) & (mouseY < (camr.top + camr.height)) ) {
-                forcebudgeright = true
-            } else if (mouseX < w()-wrightdiv) {
-                forcebudgeright = false
+            if ( (mouseX > camr.left) & (mouseX < (camr.left + camr.width)) & (mouseY > camr.top) & (mouseY < (camr.top + camr.height)) ) {
+                forcebudge = true
+            } else if ((!teensy & (mouseX < w()*2/3)) || (teensy & (mouseY < (h()*2/3)))) {
+                console.log("CLOOOOSE")
+                forcebudge = false
             }
-            if (forcebudgeright) { budgingright = budgingright*0.9 + 0.1; } else { budgingright = budgingright*0.9; }
+            if (forcebudge) { budgingright = budgingright*0.9 + 0.1; console.log("opening") } else { budgingright = budgingright*0.9; console.log("closing") }
 
             if (t > (lastblink + nextblink + holdblink)) {
                 lastblink = t
@@ -277,7 +292,6 @@
                 duck.textContent = ">(o)__\n (_~_/";
                 torpor = 0
             }
-            // console.log((t > lastblink) && (t < (t + nextblink)))
 
             let mag = relativeAngle(duckrotdes, duckrot)
             if (Math.abs(mag) > 0.1) {
@@ -344,6 +358,7 @@
 
             // rightdesc.style.width = rightbudge + 10 + 'px';
 
+            // glow.style.transform = `translate(0, 0%)`
             glow.style.boxShadow = `
                 inset 0 0 ${rand(1,2)*dim/100}px ${marg}px rgba(0, 0, 0, 255),
                 inset 0 0 ${dim/2}px ${(Math.sin(t)*0.1+0.9)*dim/3}px rgba(${rand(200,210)}, ${rand(200,210)}, ${rand(240,255)}, ${Math.random()*0.01+(0.1*Math.sin(t*2)+2)*0.03})`;
@@ -358,37 +373,33 @@
 
 
             // right flipper for the thing :
-            cam.style.transform = `translate(${w()-marg*2 + dim/10*budgingright + 10/t}px, ${h()/2}px) translate(-50%, -50%) scale(${dim/30 * (1-teensy)}%)`
+            cam.style.transform = `translate(${ (!teensy) ? (w()-marg*2 + dim/10*budgingright + 10/t) : (w()/2) }px, ${ (!teensy) ? (h()/2) : (h()-marg*2 + dim/10*budgingright + 10/t) }px) translate(-50%, -50%) scale(${dim/30}%) rotate(${90*teensy}deg)`
             cam.style.filter = `
-                drop-shadow(${10*rand()}px ${10*rand()}px 20px rgba(0, 255, 255, ${0.5-budgingright})) 
-                drop-shadow(5px 5px 5px rgba(255, 0, 0, ${0.5-budgingright}))
-                brightness(${0.5-4*budgingright})`;
+                drop-shadow(${10*rand()}px ${10*rand()}px 20px rgba(${rand(100,150)}, 255, ${rand(100,150)}, ${0.5-budgingright})) 
+                drop-shadow(5px 5px 5px rgba(0, 255, 0, ${0.5-budgingright}))
+                brightness(${1})
+                opacity(${0.2*(1-budgingright)})`;
 
             // right thing :
 
-            rightdesc.style.boxShadow = `0 0 ${rand(1,2)*dim/100}px ${0}px rgba(0, 0, 0, 255)`
-            rightdesc.style.background = `rgba(0, 0, 0, 255)`
-            if (!teensy) {
-                rightdesc.style.transform = `translate(${-(rightbudge+marg)}px, 0px)`
-                rightdesc.style.width = rightbudge + 10 + 'px';
-                rdc.style.color = `rgba(255, 255, 255, ${o2} )`
-                rdc.style.textShadow = `
-                    ${8*rand()}px ${5*rand()}px 3px rgba(${0}, ${0.5*(Math.sin(t)+0.5)*128}, ${(1-0.5*(Math.sin(t)+0.5))*255}, ${o2}),
-                    0px 0px ${rand(10,20)}px rgba(${255}, ${255}, ${255}, ${o2})`;
-                rdcMotd.style.width = `${rightbudge-rdcpad*1}px`;
-                rdcMotd.style.height = `${rightbudge*0.1}px`;
-                rdcMotd.style.background = `linear-gradient(rgba(0,0,0,${1-budgingright}), rgba(0,0,0,${0.5-budgingright})), url('motd.png')`;
-            } else {
-                rightdesc.style.transform = `translate(${-w()}px, ${h()/2}px)`
-                // rightdesc.style.left = `0 px`;
-                // rightdesc.style.top = h()/2 + `px`;
-                rightdesc.style.width = w() + `px`;
-                rightdesc.style.height = h() + `px`;
-                rdcMotd.style.width = `${w()-rdcpad*2}px`;
-                rdcMotd.style.height = `${(w()-rdcpad*2)*0.1}px`;
-                rdcMotd.style.background = `url('motd.png')`;
-                rdc.style.color = `rgba(255, 255, 255, 255 )`
-            }
+            rightdesc.style.boxShadow   = `0 0 ${rand(1,2)*dim/100}px ${0}px rgba(0, 0, 0, 255)`
+            rightdesc.style.background  = `rgba(0, 0, 0, 255)`
+            rightdesc.style.height      = (teensy ? (rightbudge + 10) : h()) + `px`;
+            rightdesc.style.width       = (teensy ? w() : (rightbudge + 10)) + 'px';
+            rightdesc.style.transform   = `translate(${teensy ? (-w()): -(rightbudge+marg)}px, ${teensy ? h()-(rightbudge+marg) : 0}px)`
+            // rightdesc.style.transform   = `translate(${-(rightbudge+marg)}px, 0px)`
+            // rightdesc.style.height = 'auto';
+            // rightdesc.style.minHeight = h() + `px`;
+            // rightdesc.style.maxHeight = h() + `px`;
+            // rightdesc.style.overflowY = 'auto';
+            // rightdesc.style.width = rightbudge + 10 + 'px';
+            rdc.style.color = `rgba(255, 255, 255, ${o2} )`
+            rdc.style.textShadow = `
+                ${8*rand()}px ${5*rand()}px 3px rgba(${0}, ${0.5*(Math.sin(t)+0.5)*128}, ${(1-0.5*(Math.sin(t)+0.5))*255}, ${o2}),
+                0px 0px ${rand(10,20)}px rgba(${255}, ${255}, ${255}, ${o2})`;
+            rdcMotd.style.width = `${rightbudge-rdcpad*1}px`;
+            rdcMotd.style.height = `${rightbudge*0.1}px`;
+            rdcMotd.style.background = `linear-gradient(rgba(0,0,0,${1-budgingright}), rgba(0,0,0,${0.5-budgingright})), url('motd.png')`;
             rdcMotd.style.backgroundSize = 'cover';
             rdcMotd.style.backgroundPosition = 'center';
 
