@@ -12,7 +12,7 @@
             min-height: 100vh;
             background: black;
             overflow-x: hidden;
-            overflow-y: scroll;
+            overflow-y: hidden;
             /*position: relative;*/
             /*position: fixed;*/
             boxShadow: inset 0 0 200px 100px rgba(255, 255, 255, 0.3);
@@ -218,17 +218,17 @@
 
             // duck :
 
-            let cx = window.innerWidth / 2;
-            let cy = (window.innerHeight / 2);
+            let cx = w() / 2;
+            let cy = (w() / 2);
             if (starting) {dx = cx; vx = cx;dy = cy; vy = cy; starting = false}
             // const cx = 0;
             // const cy = 0;
             cx += teensy ? 0 : leftbudge/2 -rightbudge/2
             cy += teensy ? leftbudge/2 -rightbudge/2 : 0
 
-            let dim = window.innerWidth;
-            if (window.innerHeight < dim) {
-                dim = window.innerHeight;
+            let dim = w();
+            if (h() < dim) {
+                dim = h();
             };  
 
             if (w() <= h()) { teensy = 1 } else { teensy = 0 } // teensaaaaaaay
@@ -239,8 +239,8 @@
 
             rx = (mouseX - dx)
             ry = (mouseY - dy)
-            hort = Math.max(-1, Math.min(2*rx/window.innerWidth, 1)) // clamped cuz it was buggin crazy
-            vert = Math.max(-1, Math.min(2*ry/window.innerHeight,1))
+            hort = Math.max(-1, Math.min(2*rx/w(), 1)) // clamped cuz it was buggin crazy
+            vert = Math.max(-1, Math.min(2*ry/h(),1))
             // console.log(mouseY, dy, ry)
 
             let touchy = Math.max(0, (1-Math.abs(hort)) * (1-Math.abs(vert)) - 0.6)*dim/10
@@ -263,10 +263,9 @@
             if ( (mouseX > camr.left) & (mouseX < (camr.left + camr.width)) & (mouseY > camr.top) & (mouseY < (camr.top + camr.height)) ) {
                 forcebudge = true
             } else if ((!teensy & (mouseX < w()*2/3)) || (teensy & (mouseY < (h()*2/3)))) {
-                console.log("CLOOOOSE")
                 forcebudge = false
             }
-            if (forcebudge) { budgingright = budgingright*0.9 + 0.1; console.log("opening") } else { budgingright = budgingright*0.9; console.log("closing") }
+            if (forcebudge) { budgingright = budgingright*0.9 + 0.1 } else { budgingright = budgingright*0.9 }
 
             if (t > (lastblink + nextblink + holdblink)) {
                 lastblink = t
@@ -352,7 +351,7 @@
             // glow :
 
             leftbudge = 0
-            rightbudge = w()/3*budgingright
+            rightbudge = (teensy ? h()/2 : w()/3)*budgingright
             let marg = dim/16
             o2 = budgingright*2-1
 
