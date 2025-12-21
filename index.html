@@ -332,21 +332,21 @@
             duck.style.color = `rgba(${255}, ${220+35*Math.random()}, ${200}, 255)`;
             // duck.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%) scaleX(${Math.cos(duckrot)})`;
             duck.style.transform = `translate(${vx}px, ${vy - 0.01*dim/t}px) translate(-50%, -100%) scale(${Math.cos(duckrot)}, ${1-0.2*Math.abs(vert)}) skewY(${Math.sin(duckrot)*vert*0.5}rad)`;
-            duck.style.textShadow = shad()
+            // duck.style.textShadow = shad()
 
             // text :
 
             let dist = dim/10
             let stiff = 0.5
             t1.style.transform = `translate(${((1+stiff)*cx+(1-stiff)*vx)/2 - dim/100*Math.sin(t)}px, ${cy - dim/100*Math.sin(0.8*t) + 0.5*dist + 0.01*dim/t}px) translate(-50%, -100%)`
-            t1.style.textShadow = shad(0.5, h2 - t1hov*0.5)
+            // t1.style.textShadow = shad(0.5, h2 - t1hov*0.5)
             t1.style.textDecoration = `none`
             t1.style.color = `rgba(${rand(255, 255*(1-t1hov))}, 255, ${rand(255, 255*(1-t1hov))}, ${0.5 + 0.5*t1hov})`
             t1r = t1.getBoundingClientRect()
 
             stiff = (stiff+1)/2
             t2.style.transform = `translate(${((1+stiff)*cx+(1-stiff)*vx)/2 - dim/100*Math.sin(-0.8*t)}px, ${cy - dim/100*Math.sin(-0.5*t) + dist + 0.01*dim/t}px) translate(-50%, -100%)`
-            t2.style.textShadow = shad(0.5, h2 - t2hov*0.5)
+            // t2.style.textShadow = shad(0.5, h2 - t2hov*0.5)
             t2.style.textDecoration = `none`
             t2.style.color = `rgba(${rand(255, 255*(1-t2hov))}, ${rand(255, 255*(1-t2hov))}, 255, ${0.5 + 0.5*t2hov})`
 
@@ -375,32 +375,26 @@
 
             // right flipper for the thing :
             cam.style.transform = `translate(${ (!teensy) ? (w()-marg*2 + dim/10*budgingright + 10/t) : (w()/2) }px, ${ (!teensy) ? (h()/2) : (h()-marg*2 + dim/10*budgingright + 10/t) }px) translate(-50%, -50%) scale(${dim/30}%) rotate(${90*teensy}deg)`
-            cam.style.filter = `
-                drop-shadow(${10*rand()}px ${10*rand()}px 20px rgba(${rand(100,150)}, 255, ${rand(100,150)}, ${0.5-budgingright})) 
-                drop-shadow(5px 5px 5px rgba(0, 255, 0, ${0.5-budgingright}))
-                brightness(${1})
-                opacity(${0.2*(1-budgingright)})`;
+            // cam.style.filter = `
+            //     drop-shadow(${10*rand()}px ${10*rand()}px 20px rgba(${rand(100,150)}, 255, ${rand(100,150)}, ${0.5-budgingright})) 
+            //     drop-shadow(5px 5px 5px rgba(0, 255, 0, ${0.5-budgingright}))
+            //     brightness(${1})
+            //     opacity(${0.2*(1-budgingright)})`;
 
             // right thing :
 
-            rightdesc.style.boxShadow   = `0 0 ${rand(1,2)*dim/100}px ${0}px rgba(0, 0, 0, 255)`
+            // rightdesc.style.boxShadow   = `0 0 ${rand(1,2)*dim/100}px ${0}px rgba(0, 0, 0, 255)`
             rightdesc.style.background  = `rgba(0, 0, 0, 255)`
             rightdesc.style.height      = (teensy ? (rightbudge + 10) : h()) + `px`;
             rightdesc.style.width       = (teensy ? w() : (rightbudge + 10)) + 'px';
             rightdesc.style.transform   = `translate(${teensy ? (-w()): -(rightbudge+marg)}px, ${teensy ? h()-(rightbudge+marg) : 0}px)`
-            // rightdesc.style.transform   = `translate(${-(rightbudge+marg)}px, 0px)`
-            // rightdesc.style.height = 'auto';
-            // rightdesc.style.minHeight = h() + `px`;
-            // rightdesc.style.maxHeight = h() + `px`;
-            // rightdesc.style.overflowY = 'auto';
-            // rightdesc.style.width = rightbudge + 10 + 'px';
             rdc.style.color = `rgba(255, 255, 255, ${o2} )`
-            rdc.style.textShadow = `
-                ${8*rand()}px ${5*rand()}px 3px rgba(${0}, ${0.5*(Math.sin(t)+0.5)*128}, ${(1-0.5*(Math.sin(t)+0.5))*255}, ${o2}),
-                0px 0px ${rand(10,20)}px rgba(${255}, ${255}, ${255}, ${o2})`;
+            // rdc.style.textShadow = `
+            //     ${8*rand()}px ${5*rand()}px 3px rgba(${0}, ${0.5*(Math.sin(t)+0.5)*128}, ${(1-0.5*(Math.sin(t)+0.5))*255}, ${o2}),
+            //     0px 0px ${rand(10,20)}px rgba(${255}, ${255}, ${255}, ${o2})`;
             rdcMotd.style.width = `${rightbudge-rdcpad*1}px`;
             rdcMotd.style.height = `${rightbudge*0.1}px`;
-            rdcMotd.style.background = `linear-gradient(rgba(0,0,0,${1-budgingright}), rgba(0,0,0,${0.5-budgingright})), url('motd.png')`;
+            rdcMotd.style.background = `url('motd.png')`;
             rdcMotd.style.backgroundSize = 'cover';
             rdcMotd.style.backgroundPosition = 'center';
 
