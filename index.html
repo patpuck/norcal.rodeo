@@ -339,7 +339,7 @@
             duck.style.color = `rgba(${255}, ${220+35*Math.random()}, ${200}, 255)`;
             // duck.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%) scaleX(${Math.cos(duckrot)})`;
             duck.style.transform = `translate(${vx}px, ${vy - 0.01*dim/t}px) translate(-50%, -100%) scale(${Math.cos(duckrot)}, ${1-0.2*Math.abs(vert)}) skewY(${Math.sin(duckrot)*vert*0.5}rad)`;
-            duck.style.textShadow = perf ? shad() : `0px 0px ${rand(20,50)}px rgba(${rand(0, 150)}, ${rand(200, 255)}, ${rand(0, 150)}, 1)`
+            duck.style.textShadow = perf ? shad() : ``
 
             // text :
 
