@@ -346,14 +346,14 @@
             let dist = Math.max(75,dim/10)
             let stiff = 0.5
             t1.style.transform = `translate(${((1+stiff)*cx+(1-stiff)*vx)/2 - dim/100*Math.sin(t)}px, ${cy - dim/100*Math.sin(0.8*t) + 0.5*dist + 0.01*dim/t}px) translate(-50%, -100%)`
-            t1.style.textShadow = perf ? shad(0.5, h2 - t1hov*0.5) : `0px 0px ${rand(20,50)}px rgba(${rand(0, 150)}, ${rand(200, 255)}, ${rand(0, 150)}, 1)`
+            t1.style.textShadow = perf ? shad(0.5, h2 - t1hov*0.5) : ``
             t1.style.textDecoration = `none`
             t1.style.color = `rgba(${rand(255, 255*(1-t1hov))}, 255, ${rand(255, 255*(1-t1hov))}, ${0.5 + 0.5*t1hov})`
             t1r = t1.getBoundingClientRect()
 
             stiff = (stiff+1)/2
             t2.style.transform = `translate(${((1+stiff)*cx+(1-stiff)*vx)/2 - dim/100*Math.sin(-0.8*t)}px, ${cy - dim/100*Math.sin(-0.5*t) + dist + 0.01*dim/t}px) translate(-50%, -100%)`
-            t2.style.textShadow = perf ? shad(0.5, h2 - t2hov*0.5) : `0px 0px ${rand(20,50)}px rgba(${rand(0, 150)}, ${rand(200, 255)}, ${rand(0, 150)}, 1)`
+            t2.style.textShadow = perf ? shad(0.5, h2 - t2hov*0.5) : ``
             t2.style.textDecoration = `none`
             t2.style.color = `rgba(${rand(255, 255*(1-t2hov))}, ${rand(255, 255*(1-t2hov))}, 255, ${0.5 + 0.5*t2hov})`
 
