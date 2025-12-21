@@ -239,7 +239,7 @@
             if (h() < dim) {
                 dim = h();
             };  
-            perf = window.mobileCheck() // proportion of performance ,,, like an LOD
+            perf = (window.mobileCheck() ? 0 : 1) // proportion of performance ,,, like an LOD
 
 
             duckrot = duckrot % (2 * Math.PI);
