@@ -40,7 +40,7 @@
 	    to {
 	        visibility: hidden;
 	    }
-	} /* stole ts from cere who probably stole ts from grok lolollo */
+	} /* stole ts from cere who probably stole ts from grok */
 
     html, body {
 	    margin: 0;
@@ -66,6 +66,10 @@
         font-family: sans-serif;
 	}
 
+	@keyframes bgscroll {
+		from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+	    to   { background-position: 0 0, 0 0, 0 0, 0 0, -1000px 0; }
+	}
 	.centered-content {
 		max-width: 750px;
         width: 75%;
@@ -74,12 +78,16 @@
 /*        border: 1px solid rgba(255, 255, 255, 0.1);*/
 /*        background: rgba(0, 0, 0, 0.8);      */
 		background:
-	    	radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-			linear-gradient(rgba(0, 4, 0, 0.95), rgba(0, 0, 0, 0.8)),
-	    	radial-gradient(rgba(0, 0, 0, 0), rgba(0, 128, 255, 0.5)),
+			linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 255, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+	    	radial-gradient(rgba(0, 0, 255, 0.1), rgba(0, 255, 0, 0.1), rgba(255, 0, 0, 0.1), rgba(0, 0, 0, 1)),
+			linear-gradient(rgba(0, 4, 0, 0), rgba(0, 0, 0, 0.95)),
+	    	radial-gradient(rgba(0, 128, 255, 1), rgba(0, 0, 0, 0)),
 			url('galaxy.jpg');
         box-shadow: 0 0px 10px rgba(0, 0, 0, 1),0 0px 10px rgba(0, 0, 0, 1),-20px 0px 10px rgba(255, 128, 0, 0.1),20px 0px 10px rgba(0, 128, 255, 0.1);
         height: auto; 
+		background-size: auto, auto, auto, auto, 500px; /* Gives the galaxy a fixed tiling size */
+        animation: galaxy-scroll 1s linear infinite;
+        background-repeat: repeat;
 /*	    overflow: scroll;*/
     }
     .fullwid {
@@ -139,7 +147,7 @@
 	.headertext {
         font-size:18px;
 		text-shadow: 
-			2.5px 2.5px 0.1px rgba(0, 0, 0, 1),
+			3.5px 3.5px 0.1px rgba(0, 0, 0, 1),
 			0 5px 15px var(--purp);
         font-family:"micraf";
     }
@@ -187,11 +195,32 @@
 	    content: ""; 
 	    animation: swap-dithersub 2s infinite;
 	}
+	@keyframes swap-disclink {
+	    0%, 24% { content: "backend"; }
+	    25%, 49% { content: "relay"; }
+	    50%, 74% { content: "discord"; }
+	    75%, 100% { content: "chat"; }
+	}
+	.swapper2::after {
+	    content: ""; 
+	    animation: swap-disclink 4s infinite;
+	}
+	.sparkles {
+		height: 32px; 
+		transform: scale(150%, 150%) translate(0%, 25%);
+	}
 </style>
 <body>
 	<div class="centered-content">
+		<p class="mctext">
+			<img src="sparkles.gif" class=sparkles> 
+			&nbsp;&nbsp;&nbsp;<blink>welcome to norcal.rodeo helpdesk!</blink>&nbsp;&nbsp;&nbsp;
+			<img src="sparkles.gif" class=sparkles>
+		</p>
         <marquee scrollamount="16" behavior="alternate" direction="left" hspace=10%>
-            <p class="shad glowmore">boom boom boom norcal rodeooo</p>
+            <p class="shad glowmore">
+	            how can i help!! :>
+	        </p>
         </marquee>
         <img src="duckvider.gif" class=fullwid>
 
@@ -199,7 +228,7 @@
         	<tr>
         		<td>
         			<p class="headertext">set a nickname!</p>
-			        <p class="mctext">blarblar</p>
+			        <p class="mctext">idk yet lol gime a sec</p>
 			    </td>
 			</tr>
 		</table>
@@ -227,7 +256,7 @@
         	<tr>
         		<td>
 			        <p class="headertext">craft and use waystones!</p>
-			        <p class="mctext">blarblar</p>
+			        <p class="mctext">errr shoud we even have these</p>
 			    </td>
 			</tr>
 		</table>
@@ -238,10 +267,26 @@
         	<tr>
         		<td>
 			        <p class="headertext">sit!</p>
-			        <p class="mctext">right click on any slab/stair from above :><br>works on mobile too!!</p>
+			        <p class="mctext">right click on any slab/stair from above :><br>kinda works on mobile too!!</p>
 			    </td>
 			</tr>
 		</table>
+
+        <img src="smallvider.gif" class="fullwid halfwid">
+
+        <table class="bawx">
+        	<tr>
+        		<td>
+			        <p class="headertext">relay from discord!</p>
+			        <p class="mctext">u gotta join the discord at any of the stupid redirects i registered</p>
+			        <a href="https://backend.norcal.rodeo/"><p class="mctext"><span class="mctext swapper2"></span></b>.norcal.rodeo</p></a>
+			    </td>
+			</tr>
+		</table>
+        <img src="duckvider.gif" class=fullwid>
+        <marquee scrollamount="16" behavior="alternate" direction="left" hspace=10%>
+            <p class="shad glowmore">stay a while <3</p>
+        </marquee>
     </div>
 </body>
 </html>
