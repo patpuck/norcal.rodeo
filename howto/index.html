@@ -51,8 +51,8 @@
 	}
 
 	body {
-		padding-top: 25vh;
-	    padding-bottom: 25vh;  
+		padding-top: 10vh;
+	    padding-bottom: 10vh;  
 	    background: 
 	    	linear-gradient(rgba(0, 4, 0, 0.95), rgba(0, 0, 0, 0.8)),
 	    	linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 9, 0, 0.95)),
@@ -67,8 +67,8 @@
 	}
 
 	@keyframes bgscroll {
-		from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
-	    to   { background-position: 0 0, 0 0, 0 0, 0 0, -1000px 0; }
+		from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+	    to   { background-position: 0 0, 0 0, 0 0, 0 0, 1000px 500px, -500px, 500px; }
 	}
 	.centered-content {
 		max-width: 750px;
@@ -78,15 +78,20 @@
 /*        border: 1px solid rgba(255, 255, 255, 0.1);*/
 /*        background: rgba(0, 0, 0, 0.8);      */
 		background:
-			linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 255, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
-	    	radial-gradient(rgba(0, 0, 255, 0.1), rgba(0, 255, 0, 0.1), rgba(255, 0, 0, 0.1), rgba(0, 0, 0, 1)),
-			linear-gradient(rgba(0, 4, 0, 0), rgba(0, 0, 0, 0.95)),
-	    	radial-gradient(rgba(0, 128, 255, 1), rgba(0, 0, 0, 0)),
-			url('galaxy.jpg');
+	        linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 255, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+	        radial-gradient(rgba(0, 255, 0, 0.1), rgba(255, 0, 0, 0.1), rgba(0, 0, 0, 1)),
+	        linear-gradient(rgba(0, 4, 0, 0), rgba(0, 0, 0, 0.95)),
+	        radial-gradient(rgba(0, 128, 255, 1), rgba(0, 0, 0, 0)),
+	        
+	        url('galaxy.jpg'),
+	        
+	        url('galaxy.jpg');
+
+	    background-blend-mode: normal, normal, normal, normal, screen, screen;
         box-shadow: 0 0px 10px rgba(0, 0, 0, 1),0 0px 10px rgba(0, 0, 0, 1),-20px 0px 10px rgba(255, 128, 0, 0.1),20px 0px 10px rgba(0, 128, 255, 0.1);
         height: auto; 
 		background-size: auto, auto, auto, auto, 500px; /* Gives the galaxy a fixed tiling size */
-        animation: galaxy-scroll 1s linear infinite;
+        animation: bgscroll 60s linear infinite;
         background-repeat: repeat;
 /*	    overflow: scroll;*/
     }
@@ -154,20 +159,42 @@
     .faint {
     	opacity:0.5;
     }
+/*    .purpshad {
+    	text-shadow:
+			0 5px 15px var(--purp);
+    }*/
+    .purpshad {
+/*    	text-shadow:*/
+/*			0 5px 15px var(--purp);*/
+		filter:
+			drop-shadow(0px 5px 10px var(--purp));
+    }
 
 
 	.bawx {
 		width: 100%;
-		border: "0";
 /*		cellspacing: "0";*/
 /*		cellpadding: "0";*/
-	    background-color: #00003322;
+	    background-color: #00003366;
 	    border: 0px groove #ffffff;
 /*	    margin: 10px;*/
 	    box-shadow: 
 	    	0 5px 15px rgba(0, 0, 99, 255),
 	    	0 0px 3px rgba(0, 0, 0, 255),
 	    	inset 0 5px 15px var(--purp);
+	    padding: 15px 30px;
+/*	    min-height:250px;*/
+	}
+	.bawx2 {
+		width: 100%;
+		border-spacing: 25px;
+	    background-color: #00003322;
+	    border: 0px groove #ffffff;
+/*	    margin: 10px;*/
+	    box-shadow: 
+	    	inset 0 5px 15px rgba(0, 0, 99, 255),
+	    	inset 0 0px 3px rgba(0, 0, 0, 255),
+	    	0 3px 10px var(--purp);
 	    padding: 15px 30px;
 /*	    min-height:250px;*/
 	}
@@ -209,14 +236,63 @@
 		height: 32px; 
 		transform: scale(150%, 150%) translate(0%, 25%);
 	}
+	a {
+	    color: #0099ff;
+/*	    text-decoration: none;*/
+/*		text-align: none;*/
+	}
+	a:hover {
+	    color: var(--purp); /* Uses your purple variable from earlier */
+	    text-shadow: 0 0 10px var(--purp);
+	}
+	.gradient-text {
+	    background: linear-gradient(to right, #fff600, #ff8000); 
+	    -webkit-background-clip: text;
+	    background-clip: text;
+	    -webkit-text-fill-color: transparent;
+	    color: transparent; 
+	    text-shadow: none !important;
+/*	    font-weight: bold;*/
+/*	    display: inline-block;*/
+	}
+	.rbow {
+	    background: linear-gradient(to right, #FF5555, #FFAA00, #FFFF55, #55FF55, #55FFFF, #FF55FF); 
+	    -webkit-background-clip: text;
+	    background-clip: text;
+	    -webkit-text-fill-color: transparent;
+	    color: transparent; 
+	    text-shadow: none !important;
+/*	    font-weight: bold;*/
+/*	    display: inline-block;*/
+	}
+	.riodejaneiro {
+	    background: linear-gradient(to right, #0000FF, #FF00FF); 
+	    -webkit-background-clip: text;
+	    background-clip: text;
+	    -webkit-text-fill-color: transparent;
+	    color: transparent; 
+	    text-shadow: none !important;
+/*	    font-weight: bold;*/
+/*	    display: inline-block;*/
+	}
+    .shad2 {
+/*    	text-shadow:*/
+/*			0 5px 15px var(--purp);*/
+		filter:
+			drop-shadow(2.5px 2.5px 0.1px rgba(0, 0, 0, 1));
+    }
 </style>
 <body>
 	<div class="centered-content">
-		<p class="mctext">
+		<div style="text-align: left;">
+			<a href="../index.html" class="mctext purpshad">&lt;&lt; return to homepage</a>
+		</div>
+        <img src="duckvider.gif" class=fullwid>
+		<p class="mctext purpshad">
 			<img src="sparkles.gif" class=sparkles> 
 			&nbsp;&nbsp;&nbsp;<blink>welcome to norcal.rodeo helpdesk!</blink>&nbsp;&nbsp;&nbsp;
 			<img src="sparkles.gif" class=sparkles>
-		</p>
+		</p><br>
         <marquee scrollamount="16" behavior="alternate" direction="left" hspace=10%>
             <p class="shad glowmore">
 	            how can i help!! :>
@@ -228,7 +304,88 @@
         	<tr>
         		<td>
         			<p class="headertext">set a nickname!</p>
-			        <p class="mctext">idk yet lol gime a sec</p>
+			        <!-- <p class="mctext shad2"><span class="rbow">idk yet lol 1 sec</span></p> -->
+					<p class="headertext goldblinky"><b>/nick set </b><span style="opacity: 0.5;">&lt;nick&gt;</span></p>
+			        <p class="mctext">but they also support QuickText!! heres some examples</p><br>
+
+			        <table class="bawx2">
+			        	<tr>
+			        		<td width=75%>
+			        			<p class="mctext">
+			        				<span style="opacity: 0.5;">/nick set </span>
+			        				<span style="display: inline-block;">hello_world</span>
+			        			</p>
+						    </td>
+			        		<td>
+			        			<p class="mctext">hello_world</p>
+						    </td>
+						</tr>
+			        	<tr>
+			        		<td width=75%>
+			        			<p class="mctext">
+			        				<span style="opacity: 0.5;">/nick set </span>
+			        				<span style="display: inline-block;">&lt;i&gt;my &lt;b&gt;name&lt;/b&gt; is &lt;u&gt;gurt&lt;/u&gt;&lt;/i&gt;</span>
+			        			</p>
+						    </td>
+			        		<td>
+			        			<p class="mctext"><i>my <b>name</b> is <u>gurt</u></i></p>
+						    </td>
+						</tr>
+			        	<tr>
+			        		<td width=75%>
+			        			<p class="mctext">
+			        				<span style="opacity: 0.5">/nick set </span>
+			        				<span style="display: inline-block;">&lt;light_purple&gt;kit &lt;b&gtcuh&lt;/b&gt&lt;/light_purple&gt;</span>
+			        			</p>
+						    </td>
+			        		<td>
+			        			<p class="mctext" style="color: #FF55FF">kit cuh</p>
+						    </td>
+						</tr>
+			        	<tr>
+			        		<td width=75%>
+			        			<p class="mctext">
+			        				<span style="opacity: 0.5;">/nick set </span>
+			        				<span style="display: inline-block;">&lt;gr blue purple&gt;riodejaneiro&lt;/gr&gt;</span>
+			        			</p>
+						    </td>
+			        		<td>
+			        			<p class="mctext shad2"><span class="riodejaneiro">riodejaneiro</span></p>
+						    </td>
+						</tr>
+			        	<tr>
+			        		<td width=75%>
+			        			<p class="mctext">
+			        				<span style="opacity: 0.5;">/nick set </span>
+			        				<span style="display: inline-block;">&lt;color #55d7a2&gt;ImPickyAbtMyColors&lt;/color&gt;</span>
+			        			</p>
+						    </td>
+			        		<td>
+			        			<p class="mctext"><span style="color: #55d7a2">ImPickyAbtMyColors</span></p>
+						    </td>
+						</tr>
+			        	<tr>
+			        		<td width=75%>
+			        			<p class="mctext">
+			        				<span style="opacity: 0.5;">/nick set </span>
+			        				<span style="display: inline-block;">&lt;rb&gt;TehPenguinOfD00M&lt;/rb&gt;</span>
+			        			</p>
+						    </td>
+			        		<td>
+			        			<p class="mctext shad2"><span class="rbow">TehPenguinOfD00M</span></p>
+						    </td>
+						</tr>
+<!-- 			        	<tr>
+			        		<td colspan="2">
+			        			<p class="mctext">
+			        				and many more!! read up on the rest of them <a href="https://placeholders.pb4.eu/user/quicktext/#click-events">here</a>.
+			        			</p>
+						    </td>
+						</tr> -->
+					</table>
+        			<br><p class="mctext">
+        				and many more!! read up on the rest of QuickText <a href="https://placeholders.pb4.eu/user/quicktext/">here</a>.
+        			</p>
 			    </td>
 			</tr>
 		</table>
@@ -243,9 +400,21 @@
 			        <img src="https://i.imgur.com/88MVMJ0.gif" class=imagg>
 			        <p class="smallmctext">hold down and select "copy media link" or smth on mobile!!</b></p>
 			        <p class="mctext">now u can pick a width & height (in blocks) and tyyyype</p>
-			        <p class="headertext"><font color=yellow class="headertext goldblinky"><b>/image2map create</b> <br><span style="opacity: 0.5;">&lt;width&gt;</span> <span style="opacity: 0.5;">&lt;height&gt;</span> <b>none</b> <span style="opacity: 0.5;">&lt;url&gt;</span></font></p>
+			        <p class="headertext"><font class="headertext goldblinky"><b>/image2map create</b> <br><span style="opacity: 0.5;">&lt;width&gt;</span> <span style="opacity: 0.5;">&lt;height&gt;</span> <b>none</b> <span style="opacity: 0.5;">&lt;url&gt;</span></font></p>
 			        <p class="mctext">replace "none" with "dither" for <i>floyd dithering... </i><b><span class="swapper goldblinky"></span></b>:<br><br>
 			        <img src="https://i.imgur.com/88MVMJ0.gif" class=imagg style="animation: swap-ditherdemo 2s infinite; width: 100%">
+			    </td>
+			</tr>
+		</table>
+
+        <img src="smallvider.gif" class="fullwid halfwid">
+
+        <table class="bawx">
+        	<tr>
+        		<td>
+			        <p class="headertext">link ur java & bedrock data!</p>
+			        <p class="mctext">this is so that u can play with pretty shaders on java and then go to work and shrimply resume from where u disconnected on ur phone</p>
+			        <p class="mctext"><b>just log in to both ur accounts in the <a href=https://link.geysermc.org/method/online>geyser</a> website!</b></p>
 			    </td>
 			</tr>
 		</table>
@@ -279,10 +448,11 @@
         		<td>
 			        <p class="headertext">relay from discord!</p>
 			        <p class="mctext">u gotta join the discord at any of the stupid redirects i registered</p>
-			        <a href="https://backend.norcal.rodeo/"><p class="mctext"><span class="mctext swapper2"></span></b>.norcal.rodeo</p></a>
+			        <a href="https://backend.norcal.rodeo/"><p class="mctext"><span class="mctext swapper2"></span>.norcal.rodeo</p></a>
 			    </td>
 			</tr>
 		</table>
+
         <img src="duckvider.gif" class=fullwid>
         <marquee scrollamount="16" behavior="alternate" direction="left" hspace=10%>
             <p class="shad glowmore">stay a while <3</p>
