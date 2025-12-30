@@ -173,6 +173,7 @@
 
 	.bawx {
 		width: 100%;
+		container-type: inline-size;
 /*		cellspacing: "0";*/
 /*		cellpadding: "0";*/
 	    background-color: #00003366;
@@ -237,7 +238,7 @@
 		height: 32px; 
 		transform: scale(150%, 150%) translate(0%, 25%);
 	}
-	.sidesparkles, .sidesparkles2{'
+	.sidesparkles, .sidesparkles2{
 		display: inline-block; /* Helps with alignment */
 	    vertical-align: middle;
 		height: 20px; 
@@ -293,6 +294,16 @@
 /*			0 5px 15px var(--purp);*/
 		filter:
 			drop-shadow(2.5px 2.5px 0.1px rgba(0, 0, 0, 1));
+    }
+	@media (max-width: 1000px) {
+	    .sidesparkles, .sidesparkles2 {
+            display: none !important;
+        }
+        
+        .headertext {
+            white-space: normal;
+            font-size: 16px;
+        }
     }
 </style>
 <body>
