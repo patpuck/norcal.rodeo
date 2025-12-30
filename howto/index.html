@@ -47,23 +47,56 @@
 	    padding: 0;
 	    width: 100%;
 	    min-height: 100vh;
-	    background-color: rgb(0, 0, 0);
+/*	    background-color: rgb(0, 0, 0);*/
 	}
 
+	@keyframes bgbgscroll {
+		from { background-position: center, center, center, center, 0 0; }
+	    to   { background-position: center, center, center, center, 100px -500px; }
+	}
+	@keyframes bgbgscroll {
+	    from { background-position: 0 0, 0 0, 0 0, center, 0 0, 0 0, 0 0; }
+	    to   { background-position: 0 0, 0 0, 0 0, center, 500px -250px, -500px 500px, 750px 1500px; }
+	}
 	body {
-		padding-top: 10vh;
-	    padding-bottom: 10vh;  
-	    background: 
-	    	linear-gradient(rgba(0, 4, 0, 0.95), rgba(0, 0, 0, 0.8)),
-	    	linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 9, 0, 0.95)),
-	    	radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 255, 1)),
-	    	url('../noise.gif');
-	    background-attachment: fixed;
+	    margin: 0;
+	    padding: 0;
+	    width: 100%;
+	    min-height: 100vh;
 	    display: flex;
-        justify-content: center; 
-        align-items: center;    
-        color: white;
-        font-family: sans-serif;
+	    justify-content: center; 
+	    align-items: center;    
+	    color: white;
+	    font-family: sans-serif;
+	    padding-top: 10vh;
+	    padding-bottom: 10vh;
+	}
+
+	body::before {
+	    content: "";
+	    position: fixed; /* This keeps it stuck to the screen */
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    z-index: -1; /* Puts it behind your content */
+	    
+	    /* Move all your background logic here */
+	    background: 
+	        linear-gradient(rgba(16, 4, 16, 0.8), rgba(0, 0, 20, 0.8), rgba(0, 0, 0, 0.8)),
+	        linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 9, 0, 0.95)),
+	        radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 95, 0.2), rgba(95, 0, 95, 0.2), rgba(0, 0, 95, 1)),
+	        url('https://i.imgur.com/HOsisPa.jpeg'),
+	        url('galaxy.jpg'),
+	        url('galaxy.jpg'),
+	        url('galaxy.jpg');
+	    
+	    background-blend-mode: normal, normal, normal, screen, screen, screen;
+	    background-size: auto, auto, auto, cover, 250px, 500px, 750px;
+	    background-repeat: repeat;
+	    
+	    /* Start the animation */
+	    animation: bgbgscroll 120s linear infinite;
 	}
 
 	@keyframes bgscroll {
@@ -88,7 +121,11 @@
 	        url('galaxy.jpg');
 
 	    background-blend-mode: normal, normal, normal, normal, screen, screen;
-        box-shadow: 0 0px 10px rgba(0, 0, 0, 1),0 0px 10px rgba(0, 0, 0, 1),-20px 0px 10px rgba(255, 128, 0, 0.1),20px 0px 10px rgba(0, 128, 255, 0.1);
+        box-shadow: 
+	        -20px 0px 10px rgba(255, 128, 0, 0.1),
+	        20px 0px 10px rgba(0, 128, 255, 0.1),
+	        0 0px 500px rgba(0, 0, 26, 1),
+	        0 0px 500px rgba(14, 0, 0, 1);
         height: auto; 
 		background-size: auto, auto, auto, auto, 500px; /* Gives the galaxy a fixed tiling size */
         animation: bgscroll 60s linear infinite;
@@ -308,13 +345,24 @@
 </style>
 <body>
 	<div class="centered-content">
-		<div style="text-align: left;">
-			<a href="../" class="mctext purpshad">&lt;&lt; return to homepage</a>
-		</div>
+		<table width=100%>
+			<tr>
+				<td width=50%>
+					<div style="text-align: left;">
+						<a href="../" class="mctext purpshad">&lt;&lt; return to homepage</a>
+					</div>
+				</td>
+				<td>
+					<div style="text-align: right;">
+						<a href="https://map.norcal.rodeo/" class="mctext purpshad">map.norcal.rodeo &gt;&gt;</a>
+					</div>
+				</td>
+			</tr>
+		</table>
         <img src="duckvider.gif" class=fullwid>
 		<p class="mctext purpshad">
 			<img src="sparkles.gif" class=sparkles> 
-			&nbsp;&nbsp;&nbsp;<blink>welcome to norcal.rodeo helpdesk!</blink>&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;<blink>welcome to the norcal.rodeo helpdesk!</blink>&nbsp;&nbsp;&nbsp;
 			<img src="sparkles.gif" class=sparkles>
 		</p><br>
         <marquee scrollamount="16" behavior="alternate" direction="left" hspace=10%>
@@ -380,7 +428,7 @@
 			        		<td width=75%>
 			        			<p class="mctext">
 			        				<span style="opacity: 0.5">/nick set </span>
-			        				<span style="display: inline-block;">&lt;light_purple&gt;kit &lt;b&gtcuh&lt;/b&gt&lt;/light_purple&gt;</span>
+			        				<span style="display: inline-block;">&lt;light_purple&gt;kit cuh&lt;/light_purple&gt;</span>
 			        			</p>
 						    </td>
 			        		<td>
@@ -463,11 +511,11 @@
         		<td>
         			<p class="headertext shad2">
 						<img src="sidesparkles.gif" class="sidesparkles2">
-				        link ur java & bedrock data!
+				        account linking!
 						<img src="sidesparkles.gif" class="sidesparkles" > 
 					</p>
-			        <p class="mctext">this is so that u can play with pretty shaders on java and then go to work and shrimply resume from where u disconnected on ur phone</p>
-			        <p class="mctext"><b>just log in to both ur accounts in the <a href=https://link.geysermc.org/method/online>geyser</a> website!</b></p>
+			        <p class="mctext">this is so that u can play with pretty shaders on java, leave, go to work, and shrimply resume on ur phone</p>
+			        <p class="mctext"><b>just log in to both ur java & bedrock accounts on the <a href=https://link.geysermc.org/method/online>geyser</a> website!</b></p>
 			    </td>
 			</tr>
 		</table>
