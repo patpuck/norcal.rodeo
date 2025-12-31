@@ -3,7 +3,7 @@
 <head>
 
     <meta name="title" content="norcal.rodeo/howto">
-    <!-- <meta name="description" content="The official helpdesk for norcal.rodeo - Join the community!"> -->
+    <!-- <meta name="description" content="gargargar"> -->
 
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:url" content="https://norcal.rodeo/howto">
@@ -84,14 +84,13 @@
 
 	body::before {
 	    content: "";
-	    position: fixed; /* This keeps it stuck to the screen */
+	    position: fixed; 
 	    top: 0;
 	    left: 0;
 	    width: 100%;
 	    height: 100%;
-	    z-index: -1; /* Puts it behind your content */
+	    z-index: -1; 
 	    
-	    /* Move all your background logic here */
 	    background: 
 	        linear-gradient(rgba(16, 4, 16, 0.8), rgba(0, 0, 20, 0.8), rgba(0, 0, 0, 0.8)),
 	        linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 9, 0, 0.95)),
@@ -105,7 +104,6 @@
 	    background-size: auto, auto, auto, cover, 250px, 500px, 750px;
 	    background-repeat: repeat;
 	    
-	    /* Start the animation */
 	    animation: bgbgscroll 120s linear infinite;
 	}
 
@@ -137,20 +135,20 @@
 	        0 0px 500px rgba(0, 0, 26, 1),
 	        0 0px 500px rgba(14, 0, 0, 1);
         height: auto; 
-		background-size: auto, auto, auto, auto, 500px; /* Gives the galaxy a fixed tiling size */
+		background-size: auto, auto, auto, auto, 500px;
         animation: bgscroll 60s linear infinite;
         background-repeat: repeat;
 /*	    overflow: scroll;*/
     }
     .centered-content {
 	    position: relative;
-	    z-index: 1; /* Pushes the whole content block in front of the background */
+	    z-index: 1;
 	}
 
 	iframe {
 	    display: block;
 	    margin: 20px auto;
-	    border-radius: 8px; /* Optional: makes it look a bit cleaner */
+	    border-radius: 8px;
 	}
     .fullwid {
 	    max-width: 100%; 
@@ -296,7 +294,7 @@
 		transform: scale(150%, 150%) translate(0%, 25%);
 	}
 	.sidesparkles, .sidesparkles2{
-		display: inline-block; /* Helps with alignment */
+		display: inline-block;
 	    vertical-align: middle;
 		height: 20px; 
 		padding: 0px 30px;
@@ -313,7 +311,7 @@
 /*		text-align: none;*/
 	}
 	a:hover {
-	    color: var(--purp); /* Uses your purple variable from earlier */
+	    color: var(--purp);
 	    text-shadow: 0 0 10px var(--purp);
 	}
 	.gradient-text {
