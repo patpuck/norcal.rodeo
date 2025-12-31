@@ -142,6 +142,16 @@
         background-repeat: repeat;
 /*	    overflow: scroll;*/
     }
+    .centered-content {
+	    position: relative;
+	    z-index: 1; /* Pushes the whole content block in front of the background */
+	}
+
+	iframe {
+	    display: block;
+	    margin: 20px auto;
+	    border-radius: 8px; /* Optional: makes it look a bit cleaner */
+	}
     .fullwid {
 	    max-width: 100%; 
 /*	    height: auto;  */
@@ -574,12 +584,7 @@
 			        <p class="mctext">u gotta join the discord at any of the stupid redirects i registered</p>
 			        <a href="https://backend.norcal.rodeo/"><p class="mctext"><span class="mctext swapper2"></span>.norcal.rodeo</p></a>
 			        <p class="smallmctext">bluemap relay maybe coming soon!</p>
-			        <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
-					    new Crate({
-					        server: '1453174624836784171', // Get this from Server Settings > Widget
-					        channel: '1453174625872646238' 
-					    })
-					</script>
+			        <iframe src="https://discord.com/widget?id=1453174624836784171&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 			    </td>
 			</tr>
 		</table>
